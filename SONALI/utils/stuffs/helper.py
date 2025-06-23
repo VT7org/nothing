@@ -80,50 +80,51 @@ Gʀᴏᴜᴘ ᴄᴏᴍᴍᴀɴᴅꜱ:
 ⦿ /removephoto ➠ ʀᴇᴍᴏᴠᴇs ᴛʜᴇ ɢʀᴏᴜᴘ ᴘʜᴏᴛᴏ.
 '''
 
-    HELP_Extra = '''Exᴛʀᴀ
+    HELP_Extra = '''Exᴛʀᴀs
 
 Exᴛʀᴀ ᴄᴏᴍᴍᴀɴᴅꜱ:
 
 ⦿ /math ➠ sᴏʟᴠᴇs ᴍᴀᴛʜᴇᴍᴀᴛɪᴄᴀʟ ᴘʀᴏʙʟᴇᴍs ᴀɴᴅ ᴇǫᴜᴀᴛɪᴏɴs.
-⦿ /tgm ➠ ᴜᴘʟᴏᴀᴅs ᴀ ᴘʜᴏᴛᴏ (ᴜɴᴅᴇʀ 𝟻ᴍʙ) ᴛᴏ ᴛʜᴇ ᴄʟᴏᴜᴅ ᴀɴᴅ ɢɪᴠᴇs ᴀ ʟɪɴᴋ.
+⦿ /tg or /tgm ➠ ᴜᴘʟᴏᴀᴅs ᴀ ᴘʜᴏᴛᴏ (ᴜɴᴅᴇʀ 𝟻ᴍʙ) ᴛᴏ ᴛʜᴇ ᴄʟᴏᴜᴅ ᴀɴᴅ ɢɪᴠᴇs ᴀ ʟɪɴᴋ.
 ⦿ /tr ➠ ᴛʀᴀɴsʟᴀᴛᴇs ᴛᴇxᴛ.
 ⦿ /google ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ ɢᴏᴏɢʟᴇ.
 ⦿ /gemini ➠ ᴀʙᴏᴜᴛ ᴀɴʏ ǫᴜᴇʀʏ ᴇx - /gemini lord ram.
 ⦿ /image ➠ ᴇx - /image lord ram ᴅᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ɪᴍᴀɢᴇs.
-⦿ /reel ➠ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs ᴇx - /reel INSTAGRAM REEL LINK
+⦿ /ig ➠ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs ᴇx - /reel INSTAGRAM REEL LINK
 ⦿ /afk ➠  Wɪᴛʜ ᴛʜɪs ʏᴏᴜ ᴄᴀɴ sᴇᴇ ᴀғᴛᴇʀ ʜᴏᴡ ʟᴏɴɢ ʏᴏᴜ ᴀʀᴇ ᴄᴏᴍɪɴɢ ᴏɴʟɪɴᴇ.
+〶 /dev To Know About My Source , Development From Where Since I was Made Though.
 '''
-    HELP_Action = '''Aᴄᴛɪᴏɴ
+    HELP_Action = '''Aᴄᴛɪᴏɴs
 
 Aᴄᴛɪᴏɴ ᴄᴏᴍᴍᴀɴᴅꜱ:
 
 » ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs ꜰᴏʀ Bᴀɴs & Mᴜᴛᴇ :
 
- ❍ /kickme: kicks the user who issued the command
+ ◔ /kickme: kicks the Specific user Itself who Persued the command
 
 Admins only:
- ❍ /ban <userhandle>: bans a user. (via handle, or reply)
- ❍ /sban <userhandle>: Silently ban a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
- ❍ /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- ❍ /unban <userhandle>: unbans a user. (via handle, or reply)
- ❍ /kick <userhandle>: kicks a user out of the group, (via handle, or reply)
- ❍ /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
- ❍ /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- ❍ /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
+ ◑ /ban <userhandle>: bans a user. (via handle, or reply)
+ ◑ /sban <userhandle>: Silently ban a user. Deletes command, Replied message and doesn't reply. (via handle, or reply)
+ ◑ /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+ ◑ /unban <userhandle>: unbans a user. (via handle, or reply)
+ ◑ /kick <userhandle>: kicks a user out of the group, (via handle, or reply)
+ ◑ /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
+ ◑ /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+ ◑ /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
 __
-𝐒ᴘᴇᴄɪᴀʟ 𝐂ᴏᴍᴍᴀɴᴅs 𝐒ᴜᴘᴘᴏʀᴛ 𝐀ʟʟ 𝐄xᴀᴍᴘʟᴇ  -  Sonali 𝚋𝚊𝚗 Sonali 𝚖𝚞𝚝𝚎 Sonali 𝚙𝚛𝚘𝚖𝚘𝚝𝚎 ..... 𝚎𝚝𝚌
+ Sᴘᴇᴄɪғɪᴄ 𝐂ᴏᴍᴍᴀɴᴅs ᴇx -  /ban replying to or specifying user-id or username..... 𝚎𝚝𝚌
 '''
     HELP_Search = '''Sᴇᴀʀᴄʜ
 
 Sᴇᴀʀᴄʜ ᴄᴏᴍᴍᴀɴᴅꜱ:
 
 • /google <query> : Search the google for the given query.
-• /app <query>  : Search playstore apps for the given query.
+• /app <query>  : Search playstore apps for the given query (may not work due to Api unavailability).
 • /stack <query>  : Search stackoverflow for the given query.
 • /image (/imgs) <query> : Get the images regarding to your query
 
 Example:
-/google hindi songs: return top 5 reuslts.
+/image Narayan: returns top 2 Images of Our Prabhu.
 '''
 
     HELP_Font = '''ғᴏɴᴛ
