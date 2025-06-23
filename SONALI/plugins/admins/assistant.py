@@ -88,7 +88,7 @@ async def join_group(client, message):
                     return
             except Exception as e:
                 await done.edit_text("**ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ɪɴᴠɪᴛɪɴɢ ᴀssɪsᴛᴀɴᴛ**.")
-                await done.edit_text("**ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ɪɴᴠɪᴛɪɴɢ ᴀssɪsᴛᴀɴᴛ**...")
+                await done.edit_text("**ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ ɪɴᴠɪᴛɪɴɢ ᴍʏ ᴀssɪsᴛᴀɴᴛs**...")
                 invite_link = await app.create_chat_invite_link(
                     chat_id, expire_date=None
                 )
@@ -121,7 +121,7 @@ async def join_group(client, message):
                 await asyncio.sleep(2)
                 await userbot.join_chat(invite_link.invite_link)
                 await done.edit_text(
-                    "**ᴀssɪsᴛᴀɴᴛ ᴡᴀs ʙᴀɴɴᴇᴅ, ɴᴏᴡ ᴜɴʙᴀɴɴᴇᴅ, ᴀɴᴅ ᴊᴏɪɴᴇᴅ ᴄʜᴀᴛ✅**"
+                    "**ᴀssɪsᴛᴀɴᴛ ᴡᴀs ʙᴀɴɴᴇᴅ ʙʏ sᴏᴍᴇᴏɴᴇ, ɴᴏᴡ ɢᴏᴛ ᴜɴʙᴀɴɴᴇᴅ, ᴀɴᴅ ᴊᴏɪɴᴇᴅ ᴛʜɪs ᴄʜᴀᴛ sᴜᴄᴄᴇssғᴜʟʟʏ✅**"
                 )
             except Exception as e:
                 await done.edit_text(
@@ -136,7 +136,7 @@ async def leave_one(client, message):
         userbot = await get_assistant(message.chat.id)
         await userbot.leave_chat(message.chat.id)
         await app.send_message(
-            message.chat.id, "**✅ ᴜsᴇʀʙᴏᴛ sᴜᴄᴄᴇssғᴜʟʟʏ ʟᴇғᴛ ᴛʜɪs Chat.**"
+            message.chat.id, "**✅ ᴜsᴇʀʙᴏᴛ sᴜᴄᴄᴇssғᴜʟʟʏ ʟᴇғᴛ ᴛʜɪs Cʜᴀᴛ.**"
         )
     except Exception as e:
         print(e)
@@ -159,7 +159,7 @@ async def leave_all(client, message):
                 await userbot.leave_chat(dialog.chat.id)
                 left += 1
                 await lol.edit(
-                    f"**ᴜsᴇʀʙᴏᴛ ʟᴇᴀᴠɪɴɢ ᴀʟʟ ɢʀᴏᴜᴘ...**\n\n**ʟᴇғᴛ:** {left} ᴄʜᴀᴛs.\n**ғᴀɪʟᴇᴅ:** {failed} ᴄʜᴀᴛs."
+                    f"**ᴜsᴇʀʙᴏᴛ ʟᴇᴀᴠɪɴɢ ᴀʟʟ ɢʀᴏᴜᴘs...**\n\n**ʟᴇғᴛ:** {left} ᴄʜᴀᴛs.\n**ғᴀɪʟᴇᴅ:** {failed} ᴄʜᴀᴛs."
                 )
             except BaseException:
                 failed += 1
