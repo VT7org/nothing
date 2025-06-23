@@ -17,7 +17,7 @@ def upload_file(file_path):
         return False, f"ᴇʀʀᴏʀ: {response.status_code} - {response.text}"
 
 
-@app.on_message(filters.command(["tgm", "tgt", "telegraph", "tl"]))
+@app.on_message(filters.command(["tgm", "tgt", "telegraph", "tg"]))
 async def get_link_group(client, message):
     if not message.reply_to_message:
         return await message.reply_text(
@@ -53,12 +53,12 @@ async def get_link_group(client, message):
 
             if success:
                 await text.edit_text(
-                    f"🌐 | [👉ʏᴏᴜʀ ʟɪɴᴋ ᴛᴀᴘ ʜᴇʀᴇ👈]({upload_path})",
+                    f"🌐 | [ʏᴏᴜʀ ʟɪɴᴋ ɪs ᴛʜᴇʀᴇ ]({upload_path})",
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    "𝖢ʀᴇᴀᴛᴇ ʙʏ 𝖳ᴇᴀᴍ 𝖯ᴜʀᴠɪ 𝖳ᴀᴘ ᴛᴏ 𝖲ᴇᴇ",
+                                    "ᴠɪᴇᴡ ᴜᴘʟᴏᴀᴅᴇᴅ ᴏɴᴇ ",
                                     url=upload_path,
                                 )
                             ]
@@ -67,7 +67,7 @@ async def get_link_group(client, message):
                 )
             else:
                 await text.edit_text(
-                    f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ғɪʟᴇ\n{upload_path}"
+                    f"ᴀɴ ᴇʀʀᴏʀ ᴏᴄᴄᴜʀʀᴇᴅ ᴡʜɪʟᴇ ᴜᴘʟᴏᴀᴅɪɴɢ ʏᴏᴜʀ ɪᴍᴀɢᴇ/Vɪᴅᴇᴏ\n{upload_path}"
                 )
 
             try:
@@ -76,7 +76,7 @@ async def get_link_group(client, message):
                 pass
 
         except Exception as e:
-            await text.edit_text(f"❌ Fɪʟᴇ ᴜᴘʟᴏᴀᴅ ғᴀɪʟᴇᴅ\n\n<i>Rᴇᴀsᴏɴ: {e}</i>")
+            await text.edit_text(f"Fɪʟᴇ ᴜᴘʟᴏᴀᴅ ғᴀɪʟᴇᴅ\n\n<i>Rᴇᴀsᴏɴ: {e}</i>")
             try:
                 os.remove(local_path)
             except Exception:
