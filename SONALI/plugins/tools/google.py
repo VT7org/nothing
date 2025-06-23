@@ -7,7 +7,7 @@ from SONALI import app
 from SafoneAPI import SafoneAPI
 
 
-@app.on_message(filters.command(["google", "gle"]))
+@app.on_message(filters.command(["google", "gg"]))
 async def google(bot, message):
     if len(message.command) < 2 and not message.reply_to_message:
         await message.reply_text("Example:\n\n/google lord ram")
@@ -60,5 +60,5 @@ async def app(bot, message):
 
 
 __MODULE__ = "Gᴏᴏɢʟᴇ"
-__HELP__ = """/google [ǫᴜᴇʀʏ] - ᴛᴏ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ ᴀɴᴅ ɢᴇᴛ ʀᴇsᴜʟᴛs
+__HELP__ = """/google ᴏʀ /gg [query] - ᴛᴏ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ ᴀɴᴅ ɢᴇᴛ ʀᴇsᴜʟᴛs
 /app | /apps [ᴀᴘᴘ ɴᴀᴍᴇ] - ᴛᴏ ɢᴇᴛ ᴀᴘᴘ ɪɴғᴏ ᴛʜᴀᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴏɴ ᴘʟᴀʏsᴛᴏʀᴇ"""
