@@ -1,10 +1,3 @@
-# Full Updated Code with:
-# ✅ Old Font Style Maintained
-# ✅ Duration Limit for Users (No Limit for Owner)
-# ✅ ETA on Download Progress
-# ✅ Warning if Song is Too Long
-# ✅ Separate /search Command with Graceful Error Handling
-
 import os
 import re
 import requests
@@ -54,7 +47,7 @@ def is_playlist(url):
     return "list=" in url and "watch?v=" not in url
 
 
-@app.on_message(filters.command("song"))
+@app.on_message(filters.command(["song", "music"]))
 async def song_cmd(client: Client, message: Message):
     user = message.from_user
     requester = f"[{user.first_name}](tg://user?id={user.id})"
