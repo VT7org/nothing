@@ -7,43 +7,41 @@ import httpx
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 start_txt = """
-✰ 𝗪ᴇʟᴄᴏᴍᴇ ᴛᴏ 𝗧ᴇᴀᴍ 𝗣ᴜʀᴠɪ 𝗥ᴇᴘᴏs ✰
+✰ ᴀɴ ᴀᴅᴠᴀɴᴄᴇᴅ ᴘʀᴏ-ʙᴏᴛ ᴘᴀᴄᴋᴇᴅ ᴡɪᴛʜ ᴀɪ-ɪɴᴛᴇʟʟɪɢᴇɴᴄᴇ ᴄᴏʀᴇs 
  
-✰ 𝗥ᴇᴘᴏ ᴛᴏ 𝗡ʜɪ 𝗠ɪʟᴇɢᴀ 𝗬ʜᴀ
+✰ ᴏғғɪᴄɪᴀʟʟʏ ʙᴀᴄᴋᴇᴅ ʙʏ sᴘᴀᴄᴇ-x & ᴄᴏ-ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴏᴘᴜs+
  
-✰ 𝗣ᴀʜʟᴇ 𝗣ᴀᴘᴀ 𝗕ᴏʟ 𝗥ᴇᴘᴏ 𝗢ᴡɴᴇʀ ᴋᴏ 
-
-✰ || @ll_ALPHA_BABY_lll ||
+✰ ʙᴜɪʟᴛ ᴡɪᴛʜ ᴛʜᴇ sᴄʀᴀᴛᴄʜ ɴ ᴅɪᴍɴɪsʜᴇᴅ ᴄᴏᴅᴇs ɪ ʜᴀᴠᴇ ᴡᴏᴠᴇɴ ᴛʜᴇᴍ ᴘʀᴇᴄɪᴏᴜsʟʏ
  
-✰ 𝗥ᴜɴ 24x7 𝗟ᴀɢ 𝗙ʀᴇᴇ 𝗪ɪᴛʜᴏᴜᴛ 𝗦ᴛᴏᴘ
+✰ ᴀʟᴡᴀʏs ʜᴀᴠᴇ 24×7 ᴜᴘᴛɪᴍᴇ ᴡɪᴛʜᴏᴜᴛ ʟᴀɢs ɴ ɢʟɪᴛᴄʜᴇs
  
 """
 
 
 
 
-@app.on_message(filters.command("repo"))
+@app.on_message(filters.command("dev"))
 async def start(_, msg):
     buttons = [
         [ 
-          InlineKeyboardButton("𝗔ᴅᴅ ᴍᴇ 𝗠ᴀʙʏ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
+          InlineKeyboardButton("ᴄᴀᴛᴄʜ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
         ],
         [
-          InlineKeyboardButton("𝗛ᴇʟᴘ", url="https://t.me/PURVI_UPDATES"),
-          InlineKeyboardButton("⍣ ፝֠֩ ̶ ̶ꭘⷪ ͓ ꯭፝֠֩͠ ̶꯭ ̶͓𝐑꯭α͕υ꯭𝛅͔ʜ꯭α꯭ɴ͓", url="https://t.me/ll_ALPHA_BABY_lll"),
+          InlineKeyboardButton("ʜᴇʟᴘ", url="https://t.me/BillaCore"),
+          InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/x_ifeelram"),
           ],
                [
-                InlineKeyboardButton("𝗧ᴇᴀᴍ 𝗣ᴜʀᴠɪ 𝗕ᴏᴛs", url=f"https://t.me/PURVI_SUPPORT"),
+                InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url=f"https://t.me/BillaCore"),
 ],
 [
-InlineKeyboardButton("𝗠ᴀɪɴ 𝗕ᴏᴛ", url=f"https://t.me/PURVI_MUSIC_BOT"),
+InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url=f"https://t.me/BillaSpace"),
 
         ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
     
     await msg.reply_photo(
-        photo="https://files.catbox.moe/kfg4e6.jpg",
+        photo="https://graph.org/file/0799b110240ef68c1519b-46d4e55cf4b3b1b908.jpg",
         caption=start_txt,
         reply_markup=reply_markup
     )
