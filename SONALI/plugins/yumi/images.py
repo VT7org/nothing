@@ -13,32 +13,32 @@ async def google_img_search(client: Client, message: Message):
     try:
         query = message.text.split(None, 1)[1]
     except IndexError:
-        return await message.reply("❍ ᴘʀᴏᴠɪᴅᴇ ᴀɴ ɪᴍᴀɢᴇ ǫᴜɪᴇʀʏ ᴛᴏ sᴇᴀʀᴄʜ!")
+        return await message.reply(" ᴘʀᴏᴠɪᴅᴇ ᴀɴ ɪᴍᴀɢᴇ ǫᴜᴇʀʏ ᴛᴏ sᴇᴀʀᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ɪᴛ  ᴇx. /img  Dog !")
 
     lim = findall(r"lim=\d+", query)
     try:
         lim = int(lim[0].replace("lim=", ""))
         query = query.replace(f"lim={lim}", "")
     except IndexError:
-        lim = 6  # Default limit to 6 images
+        lim = 2  # Default limit to 2 images
 
     download_dir = "downloads"
 
     try:
-        downloader.download(query, limit=lim, output_dir=download_dir, adult_filter_off=True, force_replace=False, timeout=60)
+        downloader.download(query, limit=lim, output_dir=download_dir, adult_filter_off=True, force_replace=False, timeout=20)
         images_dir = os.path.join(download_dir, query)
         if not os.listdir(images_dir):
             raise Exception("No images were downloaded.")
         lst = [os.path.join(images_dir, img) for img in os.listdir(images_dir)][:lim]  # Ensure we only take the number of images specified by lim
     except Exception as e:
-        return await message.reply(f"❍ ᴇʀʀᴏʀ ɪɴ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ɪᴍᴀɢᴇs: {e}")
+        return await message.reply(f"ᴇʀʀᴏʀ ɪɴ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ɪᴍᴀɢᴇs: {e}")
 
-    msg = await message.reply("❍ sᴏɴᴀʟɪ ғɪɴᴅɪɴɢ ɪᴍᴀɢᴇs.....")
+    msg = await message.reply("ʙɪʟʟᴀ ғᴇᴛᴄʜɪɴɢ ɪᴍᴀɢᴇs.....")
 
     count = 0
     for img in lst:
         count += 1
-        await msg.edit(f"❍ sᴏɴᴀʟɪ ғɪɴᴅ {count} ɪᴍᴀɢᴇs.....")
+        await msg.edit(f" sᴜᴄᴄᴇssғᴜʟʟʏ ғᴇᴛᴄʜᴇᴅ {count} ɪᴍᴀɢᴇs.....")
 
     try:
         await app.send_media_group(
@@ -50,4 +50,4 @@ async def google_img_search(client: Client, message: Message):
         await msg.delete()
     except Exception as e:
         await msg.delete()
-        return await message.reply(f"❍ ᴇʀʀᴏʀ ɪɴ sᴇɴᴅɪɴɢ ɪᴍᴀɢᴇs: {e}")
+        return await message.reply(f"ᴇʀʀᴏʀ ɪɴ sᴇɴᴅɪɴɢ ɪᴍᴀɢᴇs: {e}")
