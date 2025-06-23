@@ -21,7 +21,7 @@ async def init():
         and not config.STRING5
     ):
         LOGGER(__name__).error(
-            "𝐒𝐭𝐫𝐢𝐧𝐠 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐍𝐨𝐭 𝐅𝐢𝐥𝐥𝐞𝐝, 𝐏𝐥𝐞𝐚𝐬𝐞 𝐅𝐢𝐥𝐥 𝐀 𝐏𝐲𝐫𝐨𝐠𝐫𝐚𝐦 V2 𝐒𝐞𝐬𝐬𝐢𝐨𝐧🤬"
+            "String Session For Assistant Is Missing ,Please Extract & Fill Pyrogram V2 String Session Then Restart The Billa ProBot"
         )
 
     await sudo()
@@ -37,15 +37,15 @@ async def init():
     await app.start()
     for all_module in ALL_MODULES:
         importlib.import_module("SONALI.plugins" + all_module)
-    LOGGER("SONALI.plugins").info("𝐀𝐥𝐥 𝐅𝐞𝐚𝐭𝐮𝐫𝐞𝐬 𝐋𝐨𝐚𝐝𝐞𝐝 𝐁𝐚𝐛𝐲🥳...")
+    LOGGER("SONALI.plugins").info("All Plugins Initialised ☘️...")
     await userbot.start()
     await RAUSHAN.start()
     await RAUSHAN.decorators()
-    LOGGER("SONALI").info("╔═════ஜ۩۞۩ஜ════╗\n  ♨️𝗠𝗔𝗗𝗘 𝗕𝗬 𝗔𝗟𝗣𝗛𝗔♨️\n╚═════ஜ۩۞۩ஜ════╝")
+    LOGGER("SONALI").info("✯\n  Cᴏ-Pᴏᴡᴇʀᴇᴅ♨\n ʙʏ @")
     await idle()
     await app.stop()
     await userbot.stop()
-    LOGGER("SONALI").info("╔═════ஜ۩۞۩ஜ════╗\n  ♨️𝗠𝗔𝗗𝗘 𝗕𝗬 𝗔𝗟𝗣𝗛𝗔♨️\n╚═════ஜ۩۞۩ஜ════╝")
+    LOGGER("SONALI").info("⎚\n  ɢɪᴠɪɴɢ ᴀ ʀᴇsᴛ ᴛᴏ ᴘʀᴏʙᴏᴛ\n Bɪʟʟᴀ ᴘʀᴏʙᴏᴛ sᴛᴏᴘᴘᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ")
 
 
 if __name__ == "__main__":
