@@ -1,82 +1,154 @@
 import os
-
+import re
 import requests
 import yt_dlp
 from pyrogram import filters
 from youtube_search import YoutubeSearch
+from config import SUPPORT_CHAT, LOGGER_ID
 from ... import app
-
-from config import SUPPORT_CHAT
 
 
 def time_to_seconds(time):
-    stringt = str(time)
-    return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
+    return sum(int(x) * 60**i for i, x in enumerate(reversed(str(time).split(":"))))
+
+
+def get_cookie_path():
+    online_url = "https://v0-mongo-db-api-setup.vercel.app/api/cookies.txt"
+    fallback_path = "SONALI/assets/cookies.txt"
+    try:
+        resp = requests.get(online_url, timeout=5)
+        if resp.status_code == 200:
+            with open("cookies.txt", "wb") as f:
+                f.write(resp.content)
+            return "cookies.txt"
+    except Exception as e:
+        print(f"[Cookie Download Error] Using fallback: {e}")
+    return fallback_path
+
+
+def extract_youtube_video_id(url_or_query):
+    regex = r"(?:v=|\/)([0-9A-Za-z_-]{11})(?:[?&]|$)"
+    match = re.search(regex, url_or_query)
+    if match:
+        return match.group(1)
+    return None
 
 
 @app.on_message(filters.command(["song", "music"]))
 def song(client, message):
-
     message.delete()
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    chutiya = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+    user = message.from_user
+    requester = f"[{user.first_name}](tg://user?id={user.id})"
+    query = " ".join(message.command[1:])
+    print(f"Searching: {query}")
 
-    query = ""
-    for i in message.command[1:]:
-        query += " " + str(i)
-    print(query)
     m = message.reply("**» sᴇᴀʀᴄʜɪɴɢ, ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ...**")
-    ydl_opts = {"format": "bestaudio[ext=m4a]"}
-    try:
-        results = YoutubeSearch(query, max_results=1).to_dict()
-        link = f"https://youtube.com{results[0]['url_suffix']}"
-        # print(results)
-        title = results[0]["title"][:40]
-        thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f"thumb{title}.jpg"
-        thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, "wb").write(thumb.content)
 
-        duration = results[0]["duration"]
-        results[0]["url_suffix"]
-        views = results[0]["views"]
+    if not query:
+        m.edit("**» ᴩʟᴇᴀsᴇ ᴩʀᴏᴠɪᴅᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴏʀ ᴀ ʏᴏᴜᴛᴜʙᴇ ʟɪɴᴋ.**")
+        return
+
+    video_id = None
+    if "youtube.com/watch" in query or "youtu.be/" in query:
+        video_id = extract_youtube_video_id(query)
+        if "list=" in query:
+            m.edit("**» ʏᴏᴜᴛᴜʙᴇ ᴘʟᴀʏʟɪsᴛs ᴀʀᴇ ɴᴏᴛ sᴜᴘᴘᴏʀᴛᴇᴅ.**")
+            return
+        if "music.youtube.com" in query:
+            m.edit("**» ʏᴏᴜᴛᴜʙᴇ ᴍᴜsɪᴄ ʟɪɴᴋs ᴀʀᴇ ɴᴏᴛ sᴜᴘᴘᴏʀᴛᴇᴅ.**")
+            return
+
+    try:
+        if video_id:
+            link = f"https://youtube.com/watch?v={video_id}"
+            with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+                info = ydl.extract_info(link, download=False)
+
+                if info.get('is_live'):
+                    m.edit("**» ʟɪᴠᴇ sᴛʀᴇᴀᴍs ᴀʀᴇ ɴᴏᴛ sᴜᴘᴘᴏʀᴛᴇᴅ.**")
+                    return
+
+                title = info.get('title', 'Unknown Title')[:40]
+                thumbnail = info.get('thumbnail')
+                duration = info.get('duration')
+                views = info.get('view_count', 0)
+                duration_str = f"{duration//60}:{duration%60:02d}"
+        else:
+            results = YoutubeSearch(query, max_results=1).to_dict()
+            link = f"https://youtube.com{results[0]['url_suffix']}"
+            if "list=" in link:
+                m.edit("**» ʏᴏᴜᴛᴜʙᴇ ᴘʟᴀʏʟɪsᴛs ᴀʀᴇ ɴᴏᴛ sᴜᴘᴘᴏʀᴛᴇᴅ.**")
+                return
+            title = results[0]["title"][:40]
+            thumbnail = results[0]["thumbnails"][0]
+            duration = results[0]["duration"]
+            views = results[0]["views"]
+            duration_str = duration
+
+        thumb_name = f"thumb_{title}.jpg"
+        with open(thumb_name, "wb") as f:
+            f.write(requests.get(thumbnail).content)
 
     except Exception as e:
-        m.edit(
-            "**😴 sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ.**\n\n» ᴍᴀʏʙᴇ ᴛᴜɴᴇ ɢᴀʟᴀᴛ ʟɪᴋʜᴀ ʜᴏ, ᴩᴀᴅʜᴀɪ - ʟɪᴋʜᴀɪ ᴛᴏʜ ᴋᴀʀᴛᴀ ɴᴀʜɪ ᴛᴜ !"
-        )
-        print(str(e))
+        m.edit("**😴 ɴᴏ sᴏɴɢ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ.**")
+        print(e)
         return
-    m.edit("» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...\n\nᴩʟᴇᴀsᴇ ᴡᴀɪᴛ...")
+
+    m.edit("**» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ... ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ...**")
+
+    cookie_path = get_cookie_path()
+    ydl_opts = {
+        "format": "bestaudio[ext=m4a]",
+        "cookiefile": cookie_path,
+        "outtmpl": "%(title)s.%(ext)s",
+        "quiet": True
+    }
+
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(link, download=False)
-            audio_file = ydl.prepare_filename(info_dict)
-            ydl.process_info(info_dict)
-        rep = f"**ᴛɪᴛʟᴇ :** {title[:25]}\n**ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n**ᴠɪᴇᴡs :** `{views}`\n**ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ »** {chutiya}"
-        secmul, dur, dur_arr = 1, 0, duration.split(":")
-        for i in range(len(dur_arr) - 1, -1, -1):
-            dur += int(dur_arr[i]) * secmul
-            secmul *= 60
+            info = ydl.extract_info(link, download=True)
+            audio_file = ydl.prepare_filename(info)
+
+        rep = (
+            f"**🎵 ᴛɪᴛʟᴇ :** {title[:25]}\n"
+            f"**⏱️ ᴅᴜʀᴀᴛɪᴏɴ :** `{duration_str}`\n"
+            f"**👀 ᴠɪᴇᴡs :** `{views}`\n"
+            f"**🙋‍♂️ ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ :** {requester}"
+        )
+
+        duration_sec = time_to_seconds(duration_str)
+
+        # Send to user
         message.reply_audio(
             audio_file,
             caption=rep,
             performer=app.name,
-            thumb=thumb_name,
             title=title,
-            duration=dur,
+            duration=duration_sec,
+            thumb=thumb_name,
         )
+
+        # Send to LOGGER_ID
+        app.send_audio(
+            LOGGER_ID,
+            audio_file,
+            caption=f"**[LOGGER]** {rep}\n\n**💫 ᴩᴏᴡᴇʀᴇᴅ ʙʏ : @BillaSpace**",
+            performer=app.name,
+            title=title,
+            duration=duration_sec,
+            thumb=thumb_name,
+        )
+
         m.delete()
+
     except Exception as e:
         m.edit(
-            f"**» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴇʀʀᴏʀ, ʀᴇᴩᴏʀᴛ ᴛʜɪs ᴀᴛ » [sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ](t.me/{SUPPORT_CHAT}) 💕**\n\**ᴇʀʀᴏʀ :** {e}"
+            f"**» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴇʀʀᴏʀ.**\n**ᴇʀʀᴏʀ :** `{e}`\n\n[Support](t.me/{SUPPORT_CHAT})"
         )
         print(e)
 
-    try:
-        os.remove(audio_file)
-        os.remove(thumb_name)
-    except Exception as e:
-        print(e)
- 
+    for file in [audio_file, thumb_name]:
+        try:
+            os.remove(file)
+        except:
+            pass
