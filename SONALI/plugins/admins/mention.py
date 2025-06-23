@@ -13,7 +13,7 @@ SPAM_CHATS = []
 async def tag_all_users(_,message): 
     replied = message.reply_to_message  
     if len(message.command) < 2 and not replied:
-        await message.reply_text("**ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴏʀ ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ᴛᴀɢ ᴀʟʟ**") 
+        await message.reply_text("**ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴏʀ ɢɪᴠᴇ sᴏᴍᴇ ᴛᴇxᴛ ᴛᴏ ᴛᴀɢ ᴀʟʟ ᴍᴇᴍʙᴇʀs ᴏғ ᴛʜɪs ɢʀᴏᴜᴘ-ᴄʜᴀᴛ**") 
         return                  
     if replied:
         SPAM_CHATS.append(message.chat.id)      
@@ -45,7 +45,7 @@ async def tag_all_users(_,message):
             usernum += 1
             usertxt += f"\n⊚ [{m.user.first_name}](tg://user?id={m.user.id})\n"
             if usernum == 5:
-                await app.send_message(message.chat.id,f'{text}\n{usertxt}\n\n|| ➥ ᴏғғ ᴛᴀɢɢɪɴɢ ʙʏ » /alloff ||')
+                await app.send_message(message.chat.id,f'{text}\n{usertxt}\n\n|| ➥ᴏғғ ᴛᴀɢɢɪɴɢ  ʙʏ » /alloff ||')
                 await asyncio.sleep(2)
                 usernum = 0
                 usertxt = ""                          
@@ -62,8 +62,8 @@ async def cancelcmd(_, message):
             SPAM_CHATS.remove(chat_id)
         except Exception:
             pass   
-        return await message.reply_text("**ᴛᴀɢ ᴀʟʟ sᴜᴄᴄᴇssғᴜʟʟʏ sᴛᴏᴘᴘᴇᴅ!**")     
+        return await message.reply_text("**ᴛᴀɢ ᴀʟʟ ᴘʀᴏᴄᴇss ʜᴀᴠᴇ ʙᴇᴇɴ sᴜᴄᴄᴇssғᴜʟʟʏ sᴛᴏᴘᴘᴇᴅ!**")     
                                      
     else :
-        await message.reply_text("**ɴᴏ ᴘʀᴏᴄᴇss ᴏɴɢᴏɪɴɢ!**")  
-        return       
+        await message.reply_text("**ɴᴏ ᴍᴇɴᴛɪᴏɴ ᴏʀ ᴛᴀɢ-ᴀʟʟ ᴘʀᴏᴄᴇss ɪs ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ!**")  
+        return
