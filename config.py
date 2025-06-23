@@ -7,15 +7,14 @@ from pyrogram import filters
 load_dotenv()
 
 # Get this value from my.telegram.org/apps
-API_ID = int(getenv("API_ID"))
-API_HASH = getenv("API_HASH")
-
+API_ID = getenv("API_ID", "18136872")
+API_HASH = getenv("API_HASH", "312d861b78efcd1b02183b2ab52a83a4")
 # Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","ll_ALPHA_BABY_lll")
+OWNER_USERNAME = getenv("OWNER_USERNAME","x_ifeelram")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME","Sonali_Music_bot")
+BOT_USERNAME = getenv("BOT_USERNAME","BillaProbot")
 # --------------------------------------------------------
 BOT_NAME = getenv("BOT_NAME")
 # ---------------------------------------------------------
@@ -30,7 +29,7 @@ DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 LOGGER_ID = int(getenv("LOGGER_ID", None))
 
 # Get this value from @PURVI_HELP_BOT on Telegram by /id
-OWNER_ID = int(getenv("OWNER_ID", 6051510669))
+OWNER_ID = int(getenv("OWNER_ID", 5960968099))
 
 
 ## Fill these variables if you're deploying on heroku.
@@ -41,27 +40,27 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/TEAMPURVI/SONALI_MUSIC",
+    "https://github.com/VT7org/nothing",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/PURVI_SUPPORT")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/PURVI_UPDATES")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/BillaSpace")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BillaCore")
 
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
 
 
 # Get this credentials from https://developer.spotify.com/dashboard
-SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", None)
-SPOTIFY_CLIENT_SECRET = getenv("SPOTIFY_CLIENT_SECRET", None)
+SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", "1c21247d714244ddbb09925dac565aed")
+SPOTIFY_CLIENT_SECRET = getenv("SPOTIFY_CLIENT_SECRET", "709e1a2969664491b58200860623ef19")
 
 
 # Maximum limit for fetching playlist's track from youtube, spotify, apple links.
-PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", 25))
+PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", 350))
 
 
 # Telegram audio and video file size limit (in bytes)
