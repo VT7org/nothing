@@ -1,8 +1,6 @@
 from pyrogram.types import InlineKeyboardButton
-
 import config
 from SONALI import app
-
 
 def start_panel(_):
     buttons = [
@@ -15,8 +13,17 @@ def start_panel(_):
     ]
     return buttons
 
-
 def private_panel(_):
+    # Owner profile button with fallback if username is not available
+    if hasattr(config, "OWNER_USERNAME") and config.OWNER_USERNAME:
+        owner_button = InlineKeyboardButton(
+            text=_["S_B_5"], url=f"https://t.me/{config.OWNER_USERNAME}"
+        )
+    else:
+        owner_button = InlineKeyboardButton(
+            text=_["S_B_5"], url=config.SUPPORT_CHAT
+        )
+
     buttons = [
         [
             InlineKeyboardButton(
@@ -25,7 +32,7 @@ def private_panel(_):
             )
         ],
         [
-            InlineKeyboardButton(text=_["S_B_5"], user_id=config.OWNER_ID),
+            owner_button,
             InlineKeyboardButton(text=_["S_B_7"], callback_data="gib_source"),
             InlineKeyboardButton(text=_["S_B_6"], url=config.SUPPORT_CHANNEL),
         ],
