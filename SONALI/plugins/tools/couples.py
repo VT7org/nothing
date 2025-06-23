@@ -1,4 +1,4 @@
-.import os
+import os
 import random
 from datetime import datetime
 from PIL import Image, ImageDraw
