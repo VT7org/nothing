@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # qenv.sh - Script to create .env file from config.py variables
 
