@@ -39,7 +39,7 @@ XCB = [
 def dbb():
     global db
     db = {}
-    LOGGER(__name__).info(f"Database initialiation Completed💤....")
+    LOGGER(__name__).info(f"Database initialiation Completed....")
 
 
 async def sudo():
