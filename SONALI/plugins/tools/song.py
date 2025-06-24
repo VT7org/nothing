@@ -5,7 +5,7 @@ import asyncio
 import yt_dlp
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, Message
-from youtube_search import YoutubeSearch
+from youtubesearchpython.__future__ import VideosSearch
 from config import SUPPORT_CHAT, LOGGER_ID, OWNER_ID
 from ... import app
 
@@ -53,7 +53,7 @@ async def song_cmd(client: Client, message: Message):
         return await enqueue_song(client, message, query, requester)
 
     try:
-        results = YoutubeSearch(query, max_results=1).to_dict()
+        results = VideosSearch(query, max_results=1).to_dict()
     except Exception:
         return await message.reply("**» ᴇʀʀᴏʀ ᴡʜɪʟᴇ sᴇᴀʀᴄʜɪɴɢ. ᴩʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ.**")
 
