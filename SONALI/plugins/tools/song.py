@@ -18,21 +18,6 @@ def time_to_seconds(time):
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(str(time).split(":"))))
 
 
-def get_cookie_path(fallback=False):
-    if fallback:
-        return "SONALI/assets/cookies.txt"
-    try:
-        online_url = "https://v0-mongo-db-api-setup.vercel.app/api/cookies.txt"
-        resp = requests.get(online_url, timeout=5)
-        if resp.status_code == 200:
-            with open("cookies.txt", "wb") as f:
-                f.write(resp.content)
-            return "cookies.txt"
-    except Exception as e:
-        print(f"[Cookie Download Error] Using fallback: {e}")
-    return "SONALI/assets/cookies.txt"
-
-
 def extract_youtube_video_id(url_or_query):
     regex = r"(?:v=|\/)([0-9A-Za-z_-]{11})(?:[?&]|$)"
     match = re.search(regex, url_or_query)
@@ -45,6 +30,10 @@ def extract_youtube_video_id(url_or_query):
 
 def is_playlist(url):
     return "list=" in url and "watch?v=" not in url
+
+
+def get_cookie_path():
+    return "SONALI/assets/cookies.txt"
 
 
 @app.on_message(filters.command(["song", "music"]))
@@ -145,7 +134,7 @@ async def process_song(client: Client, message: Message, link: str, requester: s
         return await message.reply("**» ʏᴏᴜᴛᴜʙᴇ ᴩʟᴀʏʟɪsᴛs ᴀʀᴇ ɴᴏᴛ sᴜᴩᴩᴏʀᴛᴇᴅ.**")
 
     try:
-        with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+        with yt_dlp.YoutubeDL({'quiet': True, 'geo_bypass': True}) as ydl:
             info = ydl.extract_info(link, download=False)
 
             if info.get('is_live'):
@@ -174,9 +163,6 @@ async def process_song(client: Client, message: Message, link: str, requester: s
     )
 
     audio_file = await download_song_with_progress(link, status, chat_id)
-
-    if not audio_file:
-        audio_file = await download_song_with_progress(link, status, chat_id, fallback=True)
 
     if not audio_file:
         return await status.edit(f"**» ᴅᴏᴡɴʟᴏᴀᴅ ᴇʀʀᴏʀ.**\n\n[Support](t.me/{SUPPORT_CHAT})")
@@ -238,20 +224,35 @@ async def cancel_download(client: Client, query: CallbackQuery):
         await query.answer("**» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴅᴏᴡɴʟᴏᴀᴅ.**", show_alert=True)
 
 
-async def download_song_with_progress(link, status_message, chat_id, fallback=False):
+async def download_song_with_progress(link, status_message, chat_id):
     try:
         ydl_opts = {
             "format": "bestaudio[ext=m4a]",
-            "cookiefile": get_cookie_path(fallback=fallback),
-            "outtmpl": "%(title)s.%(ext)s",
             "quiet": True,
+            "geo_bypass": True,
+            "geo_bypass_country": "auto",
+            "cookiesfrombrowser": ["firefox"],
             "progress_hooks": [lambda d: asyncio.create_task(update_progress(d, status_message, chat_id))]
         }
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(link, download=True)
             return ydl.prepare_filename(info)
+
     except Exception as e:
-        print(f"Download error: {e}")
+        print(f"Browser cookie download failed: {e}")
+
+    # Retry with static cookie file
+    try:
+        ydl_opts["cookiefile"] = get_cookie_path()
+        ydl_opts.pop("cookiesfrombrowser", None)
+
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(link, download=True)
+            return ydl.prepare_filename(info)
+
+    except Exception as e:
+        print(f"Fallback cookie download failed: {e}")
         return None
 
 
@@ -269,3 +270,4 @@ async def update_progress(d, status_message, chat_id):
             )
         except:
             pass
+    
