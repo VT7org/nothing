@@ -14,10 +14,6 @@ DOWNLOAD_QUEUE = {}
 CURRENT_DOWNLOAD = {}
 
 
-def time_to_seconds(time):
-    return sum(int(x) * 60 ** i for i, x in enumerate(reversed(str(time).split(":"))))
-
-
 def extract_youtube_video_id(url_or_query):
     regex = r"(?:v=|\/)([0-9A-Za-z_-]{11})(?:[?&]|$)"
     match = re.search(regex, url_or_query)
@@ -33,7 +29,7 @@ def is_playlist(url):
 
 
 def get_cookie_path():
-    return "SONALI/assets/cookies.txt"
+    return "https://v0-mongo-db-api-setup.vercel.app/api/cookies.txt"
 
 
 @app.on_message(filters.command(["song", "music"]))
@@ -66,48 +62,6 @@ async def song_cmd(client: Client, message: Message):
 
     video_url = f"https://www.youtube.com{results[0]['url_suffix']}"
     return await enqueue_song(client, message, video_url, requester)
-
-
-@app.on_message(filters.command("search"))
-async def search_cmd(client: Client, message: Message):
-    query = " ".join(message.command[1:])
-    if not query:
-        return await message.reply("**» ᴩʟᴇᴀsᴇ ᴩʀᴏᴠɪᴅᴇ ᴀ sᴏɴɢ ɴᴀᴍᴇ ᴛᴏ sᴇᴀʀᴄʜ.**")
-
-    try:
-        results = YoutubeSearch(query, max_results=5).to_dict()
-    except Exception:
-        return await message.reply("**» ᴇʀʀᴏʀ ᴡʜɪʟᴇ sᴇᴀʀᴄʜɪɴɢ. ᴩʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ.**")
-
-    if not results:
-        return await message.reply("**» ɴᴏ sᴏɴɢs ғᴏᴜɴᴅ. ᴛʀʏ ᴀɴᴏᴛʜᴇʀ ǫᴜᴇʀʏ.**")
-
-    SEARCH_RESULTS[message.chat.id] = results
-    buttons = []
-    for i, result in enumerate(results):
-        title = result["title"][:40]
-        buttons.append([InlineKeyboardButton(f"{i + 1}. {title}", callback_data=f"select_{i}")])
-
-    await message.reply(
-        "**» sᴇʟᴇᴄᴛ ᴀ sᴏɴɢ ғʀᴏᴍ ᴛʜᴇ ʀᴇsᴜʟᴛs ʙᴇʟᴏᴡ :**",
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
-
-
-@app.on_callback_query(filters.regex(r"select_\d+"))
-async def select_song_handler(client: Client, query: CallbackQuery):
-    index = int(query.data.split("_")[1])
-    chat_id = query.message.chat.id
-
-    if chat_id not in SEARCH_RESULTS or index >= len(SEARCH_RESULTS[chat_id]):
-        return await query.answer("**» sᴇʟᴇᴄᴛɪᴏɴ ᴇxᴘɪʀᴇᴅ ᴏʀ ɪɴᴠᴀʟɪᴅ.**", show_alert=True)
-
-    result = SEARCH_RESULTS[chat_id][index]
-    link = f"https://www.youtube.com{result['url_suffix']}"
-    requester = f"[{query.from_user.first_name}](tg://user?id={query.from_user.id})"
-
-    await query.message.edit("**» sᴏɴɢ sᴇʟᴇᴄᴛᴇᴅ. ǫᴜᴇᴜᴇᴅ ғᴏʀ ᴅᴏᴡɴʟᴏᴀᴅ...**")
-    await enqueue_song(client, query.message, link, requester)
 
 
 async def enqueue_song(client: Client, message: Message, link: str, requester: str):
@@ -157,10 +111,13 @@ async def process_song(client: Client, message: Message, link: str, requester: s
     except Exception:
         return await message.reply("**» sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ, ɪsɴ'ᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴏɴ ʏᴛ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ.**")
 
-    status = await message.reply(
-        "**» ᴅᴏᴡɴʟᴏᴀᴅ ᴩʀᴏɢʀᴇss : 0%**",
-        reply_markup=cancel_markup()
-    )
+    if duration >= 420 or message.from_user.id in OWNER_ID:
+        status = await message.reply(
+            "**» ᴅᴏᴡɴʟᴏᴀᴅ ᴩʀᴏɢʀᴇss : 0%**",
+            reply_markup=cancel_markup()
+        )
+    else:
+        status = await message.reply("**» ᴅᴏᴡɴʟᴏᴀᴅ ᴩʀᴏɢʀᴇss : 0%**")
 
     audio_file = await download_song_with_progress(link, status, chat_id)
 
@@ -231,21 +188,9 @@ async def download_song_with_progress(link, status_message, chat_id):
             "quiet": True,
             "geo_bypass": True,
             "geo_bypass_country": "auto",
-            "cookiesfrombrowser": ["firefox"],
+            "cookiefile": get_cookie_path(),
             "progress_hooks": [lambda d: asyncio.create_task(update_progress(d, status_message, chat_id))]
         }
-
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(link, download=True)
-            return ydl.prepare_filename(info)
-
-    except Exception as e:
-        print(f"Browser cookie download failed: {e}")
-
-    # Retry with static cookie file
-    try:
-        ydl_opts["cookiefile"] = get_cookie_path()
-        ydl_opts.pop("cookiesfrombrowser", None)
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(link, download=True)
@@ -262,10 +207,9 @@ async def update_progress(d, status_message, chat_id):
 
     if d['status'] == 'downloading':
         percent = d.get('_percent_str', '').strip()
-        eta = d.get('eta', 0)
         try:
             await status_message.edit(
-                f"**» ᴅᴏᴡɴʟᴏᴀᴅ ᴩʀᴏɢʀᴇss : {percent}**\n**⏳ ᴇᴛᴀ :** {eta} sᴇᴄᴏɴᴅs",
+                f"**» ᴅᴏᴡɴʟᴏᴀᴅ ᴩʀᴏɢʀᴇss : {percent}**",
                 reply_markup=cancel_markup()
             )
         except:
